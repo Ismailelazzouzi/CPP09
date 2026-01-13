@@ -18,10 +18,10 @@ std::vector<int> insert_num(std::vector<int> V, int num)
 std::vector<std::pair<int, int>> makePairs(std::vector<int> &numbers)
 {
     std::vector<std::pair<int, int>> pairs;
-    for (size_t i = 0; i < numbers.size(); i += 2)
-    {
+    // for (size_t i = 0; i < numbers.size(); i += 2)
+    // {
 
-    }
+    // }
 }
 
 int main()
