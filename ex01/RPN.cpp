@@ -61,5 +61,5 @@ void    RPN::execute(std::string &str)
 
 const char *RPN::inputException::what() const throw()
 {
-    return "FUCKED UP INPUT";
+    return "Invalid Input!";
 }
