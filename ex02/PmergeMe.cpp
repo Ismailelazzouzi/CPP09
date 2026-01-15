@@ -2,27 +2,22 @@
 
 PmergeMe::PmergeMe(std::string &input)
 {
-    for (size_t i = 0; i < input.length(); i++)
-    {
-        if (!isspace(input[i]) && !isdigit(input[i]))
-        {
-            throw inputException();
-        }
-    }
     std::istringstream splitted(input);
     std::string n;
-    while (getline(splitted, n, ' '))
+    while (splitted >> n)
     {
-        if (n == "")
-            throw inputException();
+        for (size_t i = 0; i < n.size(); i++)
+        {
+            if (!isdigit(n[i]))
+                throw PmergeMe::inputException();
+        }
         int number = atoi(n.c_str());
         if (number < 0)
             throw inputException();
         vcon.push_back(number);
         dcon.push_back(number);
     }
-    std::cout << "before : " << input << std::endl;
-    
+    _size = vcon.size();
 }
 
 void insert_num(std::vector<int> &V, int num)
@@ -51,39 +46,27 @@ std::vector<std::pair<int, int>> makePairs(std::vector<int> &numbers)
    return pairs;
 }
 
-int jnum(int num)
-{
-    if (num == 0)
-        return 0;
-    else if (num == 1)
-        return 1;
-    else
-        return (jnum(num - 1) + 2 * jnum(num -2));
-}
-
-bool comparePairs(const std::pair<int, int>& a, const std::pair<int, int>& b)
-{
-    return a.first < b.first;
-}
 
 void PmergeMe::sortVcon()
 {
     std::vector<std::pair<int, int>> pairs = makePairs(vcon);
     std::sort(pairs.begin(), pairs.end(), comparePairs);
-    int strangler;
-    std::vector<int> mainChain;
+    int strangler = -1;
+    if (vcon.size() % 2 == 1)
+        strangler = vcon[vcon.size() - 1];
+    vcon.clear();
     std::vector<int> pendChain;
     for (size_t i = 0; i < pairs.size(); i++)
     {
         if (pairs[i].second != -1)
         {
-            mainChain.push_back(pairs[i].first);
+            vcon.push_back(pairs[i].first);
             pendChain.push_back(pairs[i].second);
         }
         else
             strangler = pairs[i].first;
     }
-    mainChain.insert(mainChain.begin(), pendChain[0]);
+    vcon.insert(vcon.begin(), pendChain[0]);
     int last_jacob = 1;
     int k = 3;
     while (last_jacob < (int)pendChain.size())
@@ -92,20 +75,22 @@ void PmergeMe::sortVcon()
         int target = std::min(curr_jacob, (int)pendChain.size());
         for (int j = target - 1; j >= last_jacob; j--)
         {
-            insert_num(mainChain, pendChain[j]);
+            insert_num(vcon, pendChain[j]);
         }
         last_jacob = target;
         k++;
     }
-    if (vcon.size() % 2 == 1)
-        insert_num(mainChain, vcon[vcon.size() - 1]);
-    std::cout << "after : ";
-    for (size_t i = 0; i < mainChain.size(); i++)
+    if (strangler != -1)
+        insert_num(vcon, strangler);
+}
+
+void    PmergeMe::printVcon()
+{
+    for (size_t i = 0; i < vcon.size(); i++)
     {
-        std::cout << mainChain[i] << " ";
+        std::cout << " " << vcon[i];
     }
     std::cout << std::endl;
-    
 }
 
 PmergeMe::~PmergeMe()

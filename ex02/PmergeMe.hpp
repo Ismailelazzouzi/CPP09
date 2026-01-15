@@ -7,6 +7,8 @@
 #include <cmath>
 #include <sstream>
 #include <exception>
+#include <sys/time.h>
+#include <iomanip>
 
 class PmergeMe
 {
@@ -17,9 +19,17 @@ public:
     class inputException : public std::exception
     {
         public :
-            virtual const char* what() const throw();   
+        virtual const char* what() const throw();   
     };
+    int _size;
     void sortVcon();
+    void sortDcon();
+    void printVcon();
+    void printDcon();
     PmergeMe(std::string &);
     ~PmergeMe();
 };
+
+int jnum(int);
+bool comparePairs(const std::pair<int, int>& a, const std::pair<int, int>& b);
+

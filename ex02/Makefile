@@ -1,7 +1,7 @@
 NAME = PmergeMe
-CPP = c++ #-Wall -Wextra -Werror
+CPP = c++ -Wall -Wextra -Werror
 RM = rm -rf
-FILES = main PmergeMe
+FILES = main PmergeMe PmergeMeD
 
 SRCS = $(addsuffix .cpp, $(FILES))
 OBJS = $(addsuffix .o, $(FILES))
