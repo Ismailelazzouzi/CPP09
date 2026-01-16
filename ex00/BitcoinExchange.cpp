@@ -40,7 +40,8 @@ bool checkDate(std::string date)
 
 void BitcoinExchange::parseData()
 {
-    std::ifstream dataFile("data.csv");
+    std::string dataName = "data.csv";
+    std::ifstream dataFile(dataName.c_str());
     std::string line;
     while (getline(dataFile, line))
     {
@@ -50,8 +51,8 @@ void BitcoinExchange::parseData()
         if (pos == std::string::npos)
             break;
         std::string date = line.substr(0, pos);
-        double value = stod(line.substr(pos + 1));
-        dateValueData.insert({date, value});
+        double value = strtod(line.substr(pos + 1).c_str(), NULL);
+        dateValueData.insert(std::make_pair(date, value));
     }
 }
 
@@ -62,7 +63,7 @@ int BitcoinExchange::handleInput(std::string fileName)
         std::cout << "wrong argument file name !" << std::endl;
         return (1);
     }
-    std::ifstream inputFile(fileName);
+    std::ifstream inputFile(fileName.c_str());
     std::string line;
     while (getline(inputFile, line))
     {
@@ -81,7 +82,7 @@ int BitcoinExchange::handleInput(std::string fileName)
         continue;   
     }
     date = date.substr(0, 10);
-    double value = stod(line.substr(pos + 2));
+    double value = strtod(line.substr(pos + 2).c_str(), NULL);
     if (value < 0)
     {
         std::cerr << "Error: not a positive number." << std::endl;
@@ -98,7 +99,7 @@ int BitcoinExchange::handleInput(std::string fileName)
     else if (iter->first != date && iter != dateValueData.begin())
     {
         iter--;
-        std::cout << date << " => " << value << " = " << std::endl;
+        std::cout << date << " => " << value << " = " << iter->second * value << std::endl;
     }
     else
         std::cout << "this date is too early for the database" << std::endl;

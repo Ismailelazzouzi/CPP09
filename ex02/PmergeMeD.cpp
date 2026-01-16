@@ -2,17 +2,17 @@
 
 void insert_num(std::deque<int> &D, int num)
 {
-    if (!std::is_sorted(D.begin(), D.end()))
+    if (std::adjacent_find(D.begin(), D.end(), std::greater<int>()) != D.end())
     {
-        std::cerr << "Vector is not sorted" << std::endl;
+        std::cerr << "Deque is not sorted" << std::endl;
     }
     std::deque<int>::iterator it = std::lower_bound(D.begin(), D.end(), num);
     D.insert(it, num);
 }
 
-std::deque<std::pair<int, int>> makePairs(std::deque<int> &numbers)
+std::deque<std::pair<int, int> > makePairs(std::deque<int> &numbers)
 {
-    std::deque<std::pair<int, int>> pairs;
+    std::deque<std::pair<int, int> > pairs;
     for (size_t i = 0; i < numbers.size(); i += 2)
     {
         if (i + 1 < numbers.size())
@@ -43,7 +43,7 @@ bool comparePairs(const std::pair<int, int>& a, const std::pair<int, int>& b)
 
 void PmergeMe::sortDcon()
 {
-    std::deque<std::pair<int, int>> pairs = makePairs(dcon);
+    std::deque<std::pair<int, int> > pairs = makePairs(dcon);
     std::sort(pairs.begin(), pairs.end(), comparePairs);
     int strangler = -1;
     if (dcon.size() % 2 == 1)

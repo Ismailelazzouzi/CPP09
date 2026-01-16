@@ -1,5 +1,5 @@
 NAME = RPN
-CPP = c++ -Wall -Wextra -Werror
+CPP = c++ -Wall -Wextra -Werror -std=c++98
 RM = rm -f
 FILES = main RPN
 

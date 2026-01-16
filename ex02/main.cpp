@@ -17,17 +17,17 @@ int main(int ac, char **av)
         PmergeMe algo(input);
         std::cout << "before: ";
         algo.printVcon();
-        gettimeofday(&start, nullptr);        
+        gettimeofday(&start, NULL);        
         algo.sortVcon();
-        gettimeofday(&end, nullptr);
+        gettimeofday(&end, NULL);
         std::cout << "after: ";
         algo.printVcon();
         timediff = (static_cast<double>(end.tv_sec) - start.tv_sec) * 1000000.0 + 
            (static_cast<double>(end.tv_usec) - start.tv_usec);
         std::cout << "Time to process a range of " << algo._size << " in std::vector<int> : " << timediff << " us" << std::endl;
-        gettimeofday(&start, nullptr);        
+        gettimeofday(&start, NULL);        
         algo.sortDcon();
-        gettimeofday(&end, nullptr);
+        gettimeofday(&end, NULL);
         timediff = (end.tv_sec - start.tv_sec) * 1000000.00 + (end.tv_usec - start.tv_usec);
         std::cout << "Time to process a range of " << algo._size << " in std::deque<int> : " << timediff << " us" << std::endl;
     }

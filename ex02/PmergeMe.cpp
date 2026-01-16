@@ -20,9 +20,11 @@ PmergeMe::PmergeMe(std::string &input)
     _size = vcon.size();
 }
 
+
+
 void insert_num(std::vector<int> &V, int num)
 {
-    if (!std::is_sorted(V.begin(), V.end()))
+    if (std::adjacent_find(V.begin(), V.end(), std::greater<int>()) != V.end())
     {
         std::cerr << "Vector is not sorted" << std::endl;
     }
@@ -30,9 +32,9 @@ void insert_num(std::vector<int> &V, int num)
     V.insert(it, num);
 }
 
-std::vector<std::pair<int, int>> makePairs(std::vector<int> &numbers)
+std::vector<std::pair<int, int> > makePairs(std::vector<int> &numbers)
 {
-    std::vector<std::pair<int, int>> pairs;
+    std::vector<std::pair<int, int> > pairs;
     for (size_t i = 0; i < numbers.size(); i += 2)
     {
         if (i + 1 < numbers.size())
@@ -49,7 +51,7 @@ std::vector<std::pair<int, int>> makePairs(std::vector<int> &numbers)
 
 void PmergeMe::sortVcon()
 {
-    std::vector<std::pair<int, int>> pairs = makePairs(vcon);
+    std::vector<std::pair<int, int> > pairs = makePairs(vcon);
     std::sort(pairs.begin(), pairs.end(), comparePairs);
     int strangler = -1;
     if (vcon.size() % 2 == 1)
